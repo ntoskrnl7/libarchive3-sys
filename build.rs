@@ -1,8 +1,8 @@
-extern crate pkg_config;
+#[cfg(not(windows))]
+fn use_pkg_config() {
+    extern crate pkg_config;
+    use std::env;
 
-use std::env;
-
-fn main() {
     let lib_dir = env::var("LIBARCHIVE_LIB_DIR").ok();
     let include_dir = env::var("LIBARCHIVE_INCLUDE_DIR").ok();
 
@@ -32,4 +32,22 @@ fn main() {
             Err(msg) => panic!("Unable to locate libarchive, err={:?}", msg),
         }
     }
+}
+
+#[cfg(windows)]
+fn use_vcpkg() {
+    extern crate vcpkg;
+    vcpkg::Config::new()
+        .emit_includes(true)
+        .copy_dlls(true)
+        .find_package("libarchive")
+        .unwrap();
+}
+
+fn main() {
+    #[cfg(windows)]
+    use_vcpkg();
+
+    #[cfg(not(windows))]
+    use_pkg_config();
 }
