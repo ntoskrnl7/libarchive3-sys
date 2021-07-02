@@ -42,6 +42,9 @@ fn use_vcpkg() {
         .copy_dlls(true)
         .find_package("libarchive")
         .unwrap();
+    println!("cargo:rustc-link-lib=static=archive");
+    println!("cargo:rustc-link-lib=User32");
+    println!("cargo:rustc-link-lib=Crypt32");
 }
 
 fn main() {

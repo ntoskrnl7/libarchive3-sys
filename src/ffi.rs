@@ -48,11 +48,8 @@ pub type archive_read_callback = unsafe extern "C" fn(
     _client_data: *mut c_void,
     _buffer: *mut *const c_void,
 ) -> ssize_t;
-pub type archive_skip_callback = unsafe extern "C" fn(
-    arg1: *mut Struct_archive,
-    _client_data: *mut c_void,
-    request: i64,
-) -> i64;
+pub type archive_skip_callback =
+    unsafe extern "C" fn(arg1: *mut Struct_archive, _client_data: *mut c_void, request: i64) -> i64;
 pub type archive_seek_callback = unsafe extern "C" fn(
     arg1: *mut Struct_archive,
     _client_data: *mut c_void,
@@ -318,11 +315,7 @@ extern "C" {
         bytes_in_last_block: c_int,
     ) -> c_int;
     pub fn archive_write_get_bytes_in_last_block(arg1: *mut Struct_archive) -> c_int;
-    pub fn archive_write_set_skip_file(
-        arg1: *mut Struct_archive,
-        arg2: i64,
-        arg3: i64,
-    ) -> c_int;
+    pub fn archive_write_set_skip_file(arg1: *mut Struct_archive, arg2: i64, arg3: i64) -> c_int;
     pub fn archive_write_set_compression_bzip2(arg1: *mut Struct_archive) -> c_int;
     pub fn archive_write_set_compression_compress(arg1: *mut Struct_archive) -> c_int;
     pub fn archive_write_set_compression_gzip(arg1: *mut Struct_archive) -> c_int;
@@ -459,16 +452,10 @@ extern "C" {
         >,
         arg4: ::std::option::Option<unsafe extern "C" fn(arg1: *mut c_void) -> ()>,
     ) -> c_int;
-    pub fn archive_write_disk_gid(
-        arg1: *mut Struct_archive,
-        arg2: *const c_char,
-        arg3: i64,
-    ) -> i64;
-    pub fn archive_write_disk_uid(
-        arg1: *mut Struct_archive,
-        arg2: *const c_char,
-        arg3: i64,
-    ) -> i64;
+    pub fn archive_write_disk_gid(arg1: *mut Struct_archive, arg2: *const c_char, arg3: i64)
+        -> i64;
+    pub fn archive_write_disk_uid(arg1: *mut Struct_archive, arg2: *const c_char, arg3: i64)
+        -> i64;
     pub fn archive_read_disk_new() -> *mut Struct_archive;
     pub fn archive_read_disk_set_symlink_logical(arg1: *mut Struct_archive) -> c_int;
     pub fn archive_read_disk_set_symlink_physical(arg1: *mut Struct_archive) -> c_int;

@@ -3,3 +3,10 @@
 extern crate libc;
 
 pub mod ffi;
+
+#[test]
+fn test() {
+    unsafe {
+        println!("{}", ffi::archive_version_number());
+    }
+}
